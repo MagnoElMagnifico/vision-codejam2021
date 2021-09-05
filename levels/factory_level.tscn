@@ -1,0 +1,1134 @@
+[gd_scene load_steps=80 format=2]
+
+[ext_resource path="res://player/respawn_point.tscn" type="PackedScene" id=1]
+[ext_resource path="res://levels/factory_tilemap.tres" type="TileSet" id=2]
+[ext_resource path="res://assets/factory-background.png" type="Texture" id=3]
+[ext_resource path="res://enemies/spikes.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/ability_control.png" type="Texture" id=5]
+[ext_resource path="res://assets/controls.png" type="Texture" id=6]
+[ext_resource path="res://enemies/death_zone.tscn" type="PackedScene" id=7]
+[ext_resource path="res://enemies/crusher.tscn" type="PackedScene" id=8]
+[ext_resource path="res://assets/tileset_factory_block.png" type="Texture" id=9]
+[ext_resource path="res://player/end_screen_zone.tscn" type="PackedScene" id=10]
+[ext_resource path="res://levels/level_manager.gd" type="Script" id=11]
+[ext_resource path="res://levels/platform.tscn" type="PackedScene" id=12]
+[ext_resource path="res://enemies/fall_object.tscn" type="PackedScene" id=13]
+[ext_resource path="res://enemies/bullet.tscn" type="PackedScene" id=14]
+[ext_resource path="res://levels/jump.tscn" type="PackedScene" id=15]
+
+[sub_resource type="Shader" id=1]
+resource_name = "player_future_shader"
+code = "shader_type canvas_item;
+
+uniform bool apply = true;
+uniform float amount = 1.0;
+uniform sampler2D offset_texture : hint_white;
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 color = texture_color;
+	
+	if (apply == true) {
+		float adjusted_amount = amount * texture(offset_texture, UV).r / 100.0;
+		color.r = texture(TEXTURE, vec2(UV.x + adjusted_amount, UV.y)).r;
+		color.g = texture(TEXTURE, UV).g;
+		color.b = texture(TEXTURE, vec2(UV.x - adjusted_amount, UV.y)).b;
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = SubResource( 1 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="Shader" id=3]
+code = "shader_type canvas_item;
+
+uniform bool apply = true;
+uniform float amount = 1.0;
+uniform sampler2D offset_texture : hint_white;
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 color = texture_color;
+	
+	if (apply == true) {
+		float adjusted_amount = amount * texture(offset_texture, UV).r / 100.0;
+		color.r = texture(TEXTURE, vec2(UV.x + adjusted_amount, UV.y)).r;
+		color.g = texture(TEXTURE, UV).g;
+		color.b = texture(TEXTURE, vec2(UV.x - adjusted_amount, UV.y)).b;
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = SubResource( 3 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 18.7366, 16 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 40, 8 )
+
+[sub_resource type="RectangleShape2D" id=7]
+extents = Vector2( 36, 4 )
+
+[sub_resource type="RectangleShape2D" id=8]
+extents = Vector2( 40, 8 )
+
+[sub_resource type="Shader" id=9]
+code = "shader_type canvas_item;
+
+uniform bool apply = true;
+uniform float amount = 1.0;
+uniform sampler2D offset_texture : hint_white;
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 color = texture_color;
+	
+	if (apply == true) {
+		float adjusted_amount = amount * texture(offset_texture, UV).r / 100.0;
+		color.r = texture(TEXTURE, vec2(UV.x + adjusted_amount, UV.y)).r;
+		color.g = texture(TEXTURE, UV).g;
+		color.b = texture(TEXTURE, vec2(UV.x - adjusted_amount, UV.y)).b;
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=10]
+resource_local_to_scene = true
+shader = SubResource( 9 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="Shader" id=11]
+code = "shader_type canvas_item;
+
+uniform bool apply = true;
+uniform float amount = 1.0;
+uniform sampler2D offset_texture : hint_white;
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 color = texture_color;
+	
+	if (apply == true) {
+		float adjusted_amount = amount * texture(offset_texture, UV).r / 100.0;
+		color.r = texture(TEXTURE, vec2(UV.x + adjusted_amount, UV.y)).r;
+		color.g = texture(TEXTURE, UV).g;
+		color.b = texture(TEXTURE, vec2(UV.x - adjusted_amount, UV.y)).b;
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=12]
+resource_local_to_scene = true
+shader = SubResource( 11 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="Shader" id=13]
+code = "shader_type canvas_item;
+
+uniform bool apply = true;
+uniform float amount = 1.0;
+uniform sampler2D offset_texture : hint_white;
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 color = texture_color;
+	
+	if (apply == true) {
+		float adjusted_amount = amount * texture(offset_texture, UV).r / 100.0;
+		color.r = texture(TEXTURE, vec2(UV.x + adjusted_amount, UV.y)).r;
+		color.g = texture(TEXTURE, UV).g;
+		color.b = texture(TEXTURE, vec2(UV.x - adjusted_amount, UV.y)).b;
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=14]
+resource_local_to_scene = true
+shader = SubResource( 13 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="CapsuleShape2D" id=15]
+radius = 8.0
+height = 2.0
+
+[sub_resource type="RectangleShape2D" id=16]
+extents = Vector2( 7, 45 )
+
+[sub_resource type="RectangleShape2D" id=17]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 6, 37 )
+
+[sub_resource type="RectangleShape2D" id=19]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="ShaderMaterial" id=20]
+resource_local_to_scene = true
+shader = SubResource( 13 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="ShaderMaterial" id=21]
+resource_local_to_scene = true
+shader = SubResource( 13 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="ShaderMaterial" id=22]
+resource_local_to_scene = true
+shader = SubResource( 13 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="ShaderMaterial" id=23]
+resource_local_to_scene = true
+shader = SubResource( 13 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="RectangleShape2D" id=24]
+extents = Vector2( 13, 19 )
+
+[sub_resource type="RectangleShape2D" id=25]
+extents = Vector2( 24, 8 )
+
+[sub_resource type="RectangleShape2D" id=26]
+extents = Vector2( 19, 4 )
+
+[sub_resource type="RectangleShape2D" id=27]
+extents = Vector2( 24, 8 )
+
+[sub_resource type="ShaderMaterial" id=28]
+resource_local_to_scene = true
+shader = SubResource( 13 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="RectangleShape2D" id=29]
+extents = Vector2( 29, 8 )
+
+[sub_resource type="Shader" id=30]
+code = "shader_type canvas_item;
+
+uniform bool apply = true;
+uniform float amount = 1.0;
+uniform sampler2D offset_texture : hint_white;
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 color = texture_color;
+	
+	if (apply == true) {
+		float adjusted_amount = amount * texture(offset_texture, UV).r / 100.0;
+		color.r = texture(TEXTURE, vec2(UV.x + adjusted_amount, UV.y)).r;
+		color.g = texture(TEXTURE, UV).g;
+		color.b = texture(TEXTURE, vec2(UV.x - adjusted_amount, UV.y)).b;
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=31]
+resource_local_to_scene = true
+shader = SubResource( 30 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="Shader" id=32]
+code = "shader_type canvas_item;
+
+uniform bool apply = true;
+uniform float amount = 1.0;
+uniform sampler2D offset_texture : hint_white;
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 color = texture_color;
+	
+	if (apply == true) {
+		float adjusted_amount = amount * texture(offset_texture, UV).r / 100.0;
+		color.r = texture(TEXTURE, vec2(UV.x + adjusted_amount, UV.y)).r;
+		color.g = texture(TEXTURE, UV).g;
+		color.b = texture(TEXTURE, vec2(UV.x - adjusted_amount, UV.y)).b;
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=33]
+resource_local_to_scene = true
+shader = SubResource( 32 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="RectangleShape2D" id=34]
+extents = Vector2( 54, 10 )
+
+[sub_resource type="RectangleShape2D" id=35]
+extents = Vector2( 5, 38 )
+
+[sub_resource type="ShaderMaterial" id=36]
+resource_local_to_scene = true
+shader = SubResource( 32 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="ShaderMaterial" id=37]
+resource_local_to_scene = true
+shader = SubResource( 32 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="ShaderMaterial" id=38]
+resource_local_to_scene = true
+shader = SubResource( 32 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="ShaderMaterial" id=39]
+resource_local_to_scene = true
+shader = SubResource( 32 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="RectangleShape2D" id=40]
+extents = Vector2( 25, 2 )
+
+[sub_resource type="RectangleShape2D" id=41]
+extents = Vector2( 16, 8 )
+
+[sub_resource type="RectangleShape2D" id=42]
+extents = Vector2( 28, 7 )
+
+[sub_resource type="RectangleShape2D" id=43]
+extents = Vector2( 16, 8 )
+
+[sub_resource type="ShaderMaterial" id=44]
+resource_local_to_scene = true
+shader = SubResource( 32 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="CapsuleShape2D" id=45]
+radius = 8.0
+height = 0.0
+
+[sub_resource type="RectangleShape2D" id=46]
+extents = Vector2( 10, 24 )
+
+[sub_resource type="RectangleShape2D" id=47]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=48]
+extents = Vector2( 10, 24 )
+
+[sub_resource type="RectangleShape2D" id=49]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=50]
+extents = Vector2( 10, 24 )
+
+[sub_resource type="RectangleShape2D" id=51]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="Shader" id=52]
+resource_name = "player_future_shader"
+code = "shader_type canvas_item;
+
+uniform bool apply = true;
+uniform float amount = 1.0;
+uniform sampler2D offset_texture : hint_white;
+
+void fragment() {
+	vec4 texture_color = texture(TEXTURE, UV);
+	vec4 color = texture_color;
+	
+	if (apply == true) {
+		float adjusted_amount = amount * texture(offset_texture, UV).r / 100.0;
+		color.r = texture(TEXTURE, vec2(UV.x + adjusted_amount, UV.y)).r;
+		color.g = texture(TEXTURE, UV).g;
+		color.b = texture(TEXTURE, vec2(UV.x - adjusted_amount, UV.y)).b;
+	}
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id=53]
+resource_local_to_scene = true
+shader = SubResource( 52 )
+shader_param/apply = true
+shader_param/amount = 30.0
+
+[sub_resource type="ShaderMaterial" id=54]
+resource_local_to_scene = true
+shader = SubResource( 52 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="ShaderMaterial" id=55]
+resource_local_to_scene = true
+shader = SubResource( 52 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="CapsuleShape2D" id=56]
+radius = 8.0
+height = 0.0
+
+[sub_resource type="RectangleShape2D" id=57]
+extents = Vector2( 10, 56 )
+
+[sub_resource type="RectangleShape2D" id=58]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="RectangleShape2D" id=59]
+extents = Vector2( 10, 18 )
+
+[sub_resource type="RectangleShape2D" id=60]
+extents = Vector2( 8, 8 )
+
+[sub_resource type="ShaderMaterial" id=61]
+resource_local_to_scene = true
+shader = SubResource( 52 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="ShaderMaterial" id=62]
+resource_local_to_scene = true
+shader = SubResource( 52 )
+shader_param/apply = false
+shader_param/amount = 30.0
+
+[sub_resource type="RectangleShape2D" id=63]
+extents = Vector2( 78, 5 )
+
+[sub_resource type="RectangleShape2D" id=64]
+extents = Vector2( 15, 51 )
+
+[node name="factory_level" type="Node2D"]
+script = ExtResource( 11 )
+LEVEL_COUNT = 4
+
+[node name="background" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="background2" type="TextureRect" parent="background"]
+margin_left = 79.0
+margin_top = 14.0
+margin_right = 449.0
+margin_bottom = 177.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background3" type="TextureRect" parent="background"]
+margin_left = 15.0
+margin_top = 14.0
+margin_right = 385.0
+margin_bottom = 177.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background5" type="TextureRect" parent="background"]
+margin_left = 80.0
+margin_top = -149.0
+margin_right = 450.0
+margin_bottom = 14.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background4" type="TextureRect" parent="background"]
+margin_left = 15.0
+margin_top = -149.0
+margin_right = 385.0
+margin_bottom = 14.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background6" type="TextureRect" parent="background"]
+margin_left = 399.0
+margin_top = -166.0
+margin_right = 855.0
+margin_bottom = 34.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background7" type="TextureRect" parent="background"]
+margin_left = 402.0
+margin_top = -356.0
+margin_right = 858.0
+margin_bottom = -156.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background8" type="TextureRect" parent="background"]
+margin_left = 800.0
+margin_top = -488.0
+margin_right = 1256.0
+margin_bottom = -288.0
+texture = ExtResource( 3 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="controls" type="TextureRect" parent="background"]
+margin_left = 77.0
+margin_top = 104.0
+margin_right = 117.0
+margin_bottom = 144.0
+texture = ExtResource( 6 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="controls2" type="TextureRect" parent="background"]
+margin_left = 180.0
+margin_top = 138.0
+margin_right = 201.0
+margin_bottom = 157.0
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 5
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="entities" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="screen1" parent="entities" instance=ExtResource( 1 )]
+position = Vector2( 49, 138 )
+is_active = true
+
+[node name="spikes" parent="entities/screen1" instance=ExtResource( 4 )]
+material = SubResource( 2 )
+position = Vector2( 87, 31 )
+
+[node name="spikes2" parent="entities/screen1" instance=ExtResource( 4 )]
+material = SubResource( 2 )
+position = Vector2( 167, 30 )
+hidden = true
+
+[node name="crusher" parent="entities/screen1" instance=ExtResource( 8 )]
+material = SubResource( 4 )
+position = Vector2( 287, 6 )
+
+[node name="shape" parent="entities/screen1/crusher/trigger_zone" index="0"]
+position = Vector2( 17, 12.2299 )
+shape = SubResource( 5 )
+
+[node name="floor_part" parent="entities/screen1/crusher" index="1"]
+position = Vector2( -32, 32 )
+
+[node name="sprite" parent="entities/screen1/crusher/floor_part" index="0"]
+margin_right = 80.0
+margin_bottom = 16.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 2
+
+[node name="collision" parent="entities/screen1/crusher/floor_part" index="1"]
+position = Vector2( 40, 8 )
+shape = SubResource( 6 )
+
+[node name="shape" parent="entities/screen1/crusher/floor_part/death_zone" index="0"]
+position = Vector2( 39, 6 )
+shape = SubResource( 7 )
+
+[node name="top_part" parent="entities/screen1/crusher" index="2"]
+position = Vector2( -32, -24 )
+
+[node name="sprite" parent="entities/screen1/crusher/top_part" index="0"]
+margin_right = 80.0
+margin_bottom = 16.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 2
+
+[node name="collision" parent="entities/screen1/crusher/top_part" index="1"]
+position = Vector2( 40, 8 )
+shape = SubResource( 8 )
+
+[node name="spikes3" parent="entities/screen1" instance=ExtResource( 4 )]
+material = SubResource( 10 )
+position = Vector2( 343, -18 )
+hidden = true
+
+[node name="shape" parent="entities/screen1/spikes3/trigger_zone" index="0"]
+position = Vector2( 0, -13 )
+
+[node name="end_screen1" parent="entities" instance=ExtResource( 10 )]
+position = Vector2( 406, 14 )
+
+[node name="screen2" parent="entities" instance=ExtResource( 1 )]
+position = Vector2( 426, -9 )
+
+[node name="platform" parent="entities/screen2" instance=ExtResource( 12 )]
+material = SubResource( 12 )
+position = Vector2( 42, 0 )
+DISTANCE = 87.0
+direction = Vector2( 1, -1 )
+
+[node name="fall_object" parent="entities/screen2" instance=ExtResource( 13 )]
+material = SubResource( 14 )
+position = Vector2( 104, -144 )
+START_LINEAR_VELOCITY = 150.0
+
+[node name="sprite" parent="entities/screen2/fall_object" index="0"]
+texture = ExtResource( 9 )
+
+[node name="collision" parent="entities/screen2/fall_object" index="1"]
+shape = SubResource( 15 )
+
+[node name="shape" parent="entities/screen2/fall_object/trigger_zone" index="0"]
+position = Vector2( 0, 56 )
+shape = SubResource( 16 )
+
+[node name="shape" parent="entities/screen2/fall_object/death_zone" index="0"]
+shape = SubResource( 17 )
+
+[node name="fall_object2" parent="entities/screen2" instance=ExtResource( 13 )]
+material = SubResource( 14 )
+position = Vector2( 145, -145 )
+START_LINEAR_VELOCITY = 70.0
+
+[node name="sprite" parent="entities/screen2/fall_object2" index="0"]
+texture = ExtResource( 9 )
+
+[node name="collision" parent="entities/screen2/fall_object2" index="1"]
+shape = SubResource( 15 )
+
+[node name="shape" parent="entities/screen2/fall_object2/trigger_zone" index="0"]
+position = Vector2( 0, 48 )
+shape = SubResource( 18 )
+
+[node name="shape" parent="entities/screen2/fall_object2/death_zone" index="0"]
+shape = SubResource( 19 )
+
+[node name="spikes" parent="entities/screen2" instance=ExtResource( 4 )]
+material = SubResource( 20 )
+position = Vector2( 46, 33 )
+hidden = true
+
+[node name="spikes2" parent="entities/screen2" instance=ExtResource( 4 )]
+material = SubResource( 21 )
+position = Vector2( 158, 33 )
+hidden = true
+
+[node name="spikes3" parent="entities/screen2" instance=ExtResource( 4 )]
+material = SubResource( 22 )
+position = Vector2( 270, -95 )
+hidden = true
+
+[node name="crusher" parent="entities/screen2" instance=ExtResource( 8 )]
+material = SubResource( 23 )
+position = Vector2( 278, -39 )
+
+[node name="shape" parent="entities/screen2/crusher/trigger_zone" index="0"]
+shape = SubResource( 24 )
+
+[node name="floor_part" parent="entities/screen2/crusher" index="1"]
+position = Vector2( -23, 17 )
+
+[node name="sprite" parent="entities/screen2/crusher/floor_part" index="0"]
+margin_top = -0.325802
+margin_right = 48.0
+margin_bottom = 15.6742
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 2
+
+[node name="collision" parent="entities/screen2/crusher/floor_part" index="1"]
+position = Vector2( 24.1759, 7.6742 )
+shape = SubResource( 25 )
+
+[node name="shape" parent="entities/screen2/crusher/floor_part/death_zone" index="0"]
+position = Vector2( 23, 6 )
+shape = SubResource( 26 )
+
+[node name="top_part" parent="entities/screen2/crusher" index="2"]
+position = Vector2( -23, -32 )
+
+[node name="sprite" parent="entities/screen2/crusher/top_part" index="0"]
+margin_right = 48.0
+margin_bottom = 16.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 2
+
+[node name="collision" parent="entities/screen2/crusher/top_part" index="1"]
+position = Vector2( 24, 8 )
+shape = SubResource( 27 )
+
+[node name="platform2" parent="entities/screen2" instance=ExtResource( 12 )]
+material = SubResource( 28 )
+position = Vector2( 310, -23 )
+DISTANCE = 125.0
+direction = Vector2( 0, -1 )
+
+[node name="death_zone" parent="entities/screen2" instance=ExtResource( 7 )]
+position = Vector2( 331, 11 )
+
+[node name="shape" parent="entities/screen2/death_zone" index="0"]
+position = Vector2( 3, -8 )
+shape = SubResource( 29 )
+
+[node name="end_screen2" parent="entities" instance=ExtResource( 10 )]
+position = Vector2( 750, -168 )
+rotation = 4.71238
+
+[node name="shape" parent="entities/end_screen2" index="0"]
+position = Vector2( 22.9999, 16.0002 )
+
+[node name="screen3" parent="entities" instance=ExtResource( 1 )]
+position = Vector2( 751, -196 )
+
+[node name="spikes" parent="entities/screen3" instance=ExtResource( 4 )]
+material = SubResource( 31 )
+position = Vector2( -103, 12 )
+hidden = true
+
+[node name="bullet" parent="entities/screen3" instance=ExtResource( 14 )]
+material = SubResource( 33 )
+position = Vector2( -344, 3 )
+VELOCITY = Vector2( 150, 0 )
+
+[node name="shape" parent="entities/screen3/bullet/trigger_zone" index="0"]
+position = Vector2( 64, 0 )
+shape = SubResource( 34 )
+
+[node name="bullet2" parent="entities/screen3" instance=ExtResource( 14 )]
+material = SubResource( 33 )
+position = Vector2( -20, -52 )
+VELOCITY = Vector2( 0, 150 )
+LIFETIME = 0.5
+
+[node name="shape" parent="entities/screen3/bullet2/trigger_zone" index="0"]
+position = Vector2( 0, 46 )
+shape = SubResource( 35 )
+
+[node name="platform" parent="entities/screen3" instance=ExtResource( 12 )]
+material = SubResource( 36 )
+position = Vector2( -328, -4 )
+DISTANCE = 86.0
+direction = Vector2( 0, -1 )
+
+[node name="spikes" parent="entities/screen3/platform" instance=ExtResource( 4 )]
+show_behind_parent = true
+material = SubResource( 37 )
+position = Vector2( 16, -8 )
+hidden = true
+
+[node name="spikes2" parent="entities/screen3" instance=ExtResource( 4 )]
+material = SubResource( 38 )
+position = Vector2( -215, -67 )
+hidden = true
+
+[node name="crusher" parent="entities/screen3" instance=ExtResource( 8 )]
+material = SubResource( 39 )
+position = Vector2( -308, -103 )
+CLOSING_SPEED = Vector2( -30, 0 )
+
+[node name="shape" parent="entities/screen3/crusher/trigger_zone" index="0"]
+position = Vector2( 6, -10 )
+shape = SubResource( 40 )
+
+[node name="floor_part" parent="entities/screen3/crusher" index="1"]
+position = Vector2( -30, -5 )
+
+[node name="sprite" parent="entities/screen3/crusher/floor_part" index="0"]
+margin_left = -30.0
+margin_right = 2.0
+margin_bottom = 16.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 2
+
+[node name="collision" parent="entities/screen3/crusher/floor_part" index="1"]
+position = Vector2( -14, 8 )
+shape = SubResource( 41 )
+
+[node name="shape" parent="entities/screen3/crusher/floor_part/death_zone" index="0"]
+position = Vector2( 1, 10 )
+shape = SubResource( 42 )
+
+[node name="top_part" parent="entities/screen3/crusher" index="2"]
+position = Vector2( 37, -5 )
+
+[node name="sprite" parent="entities/screen3/crusher/top_part" index="0"]
+margin_right = 32.0
+margin_bottom = 16.0
+texture = ExtResource( 9 )
+expand = true
+stretch_mode = 2
+
+[node name="collision" parent="entities/screen3/crusher/top_part" index="1"]
+position = Vector2( 16, 8 )
+shape = SubResource( 43 )
+
+[node name="fall_object" parent="entities/screen3" instance=ExtResource( 13 )]
+material = SubResource( 44 )
+position = Vector2( -32, -150 )
+START_LINEAR_VELOCITY = 80.0
+
+[node name="sprite" parent="entities/screen3/fall_object" index="0"]
+texture = ExtResource( 9 )
+
+[node name="collision" parent="entities/screen3/fall_object" index="1"]
+shape = SubResource( 45 )
+
+[node name="shape" parent="entities/screen3/fall_object/trigger_zone" index="0"]
+position = Vector2( 0, 33 )
+shape = SubResource( 46 )
+
+[node name="shape" parent="entities/screen3/fall_object/death_zone" index="0"]
+shape = SubResource( 47 )
+
+[node name="fall_object3" parent="entities/screen3" instance=ExtResource( 13 )]
+material = SubResource( 44 )
+position = Vector2( -56, -150 )
+START_LINEAR_VELOCITY = 80.0
+
+[node name="sprite" parent="entities/screen3/fall_object3" index="0"]
+texture = ExtResource( 9 )
+
+[node name="collision" parent="entities/screen3/fall_object3" index="1"]
+shape = SubResource( 45 )
+
+[node name="shape" parent="entities/screen3/fall_object3/trigger_zone" index="0"]
+position = Vector2( 0, 33 )
+shape = SubResource( 48 )
+
+[node name="shape" parent="entities/screen3/fall_object3/death_zone" index="0"]
+shape = SubResource( 49 )
+
+[node name="fall_object2" parent="entities/screen3" instance=ExtResource( 13 )]
+material = SubResource( 44 )
+position = Vector2( -9, -150 )
+START_LINEAR_VELOCITY = 80.0
+
+[node name="sprite" parent="entities/screen3/fall_object2" index="0"]
+texture = ExtResource( 9 )
+
+[node name="collision" parent="entities/screen3/fall_object2" index="1"]
+shape = SubResource( 45 )
+
+[node name="shape" parent="entities/screen3/fall_object2/trigger_zone" index="0"]
+position = Vector2( 0, 33 )
+shape = SubResource( 50 )
+
+[node name="shape" parent="entities/screen3/fall_object2/death_zone" index="0"]
+shape = SubResource( 51 )
+
+[node name="end_screen3" parent="entities" instance=ExtResource( 10 )]
+position = Vector2( 815, -306 )
+
+[node name="screen4" parent="entities" instance=ExtResource( 1 )]
+position = Vector2( 837, -322 )
+
+[node name="jump" parent="entities/screen4" instance=ExtResource( 15 )]
+position = Vector2( 331, -38 )
+
+[node name="jump3" parent="entities/screen4" instance=ExtResource( 15 )]
+position = Vector2( -14, -38 )
+rotation = 1.5708
+BOOST = Vector2( 80, 0 )
+
+[node name="jump4" parent="entities/screen4" instance=ExtResource( 15 )]
+position = Vector2( 339, -127 )
+rotation = -1.5708
+BOOST = Vector2( -80, 0 )
+
+[node name="spikes" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 35, 26 )
+hidden = true
+
+[node name="spikes2" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 51, 26 )
+hidden = true
+
+[node name="spikes3" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 67, 26 )
+hidden = true
+
+[node name="spikes4" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 83, 26 )
+hidden = true
+
+[node name="spikes5" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 99, 26 )
+hidden = true
+
+[node name="spikes6" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 115, 26 )
+hidden = true
+
+[node name="spikes7" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 131, 26 )
+hidden = true
+
+[node name="spikes8" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 147, 26 )
+hidden = true
+
+[node name="spikes9" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 163, 26 )
+hidden = true
+
+[node name="spikes10" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 179, 26 )
+hidden = true
+
+[node name="spikes11" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 195, 26 )
+hidden = true
+
+[node name="spikes12" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 211, 26 )
+hidden = true
+
+[node name="spikes13" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 227, 26 )
+hidden = true
+
+[node name="spikes14" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 243, 26 )
+hidden = true
+
+[node name="spikes15" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 259, 26 )
+hidden = true
+
+[node name="spikes16" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 275, 26 )
+hidden = true
+
+[node name="spikes17" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 291, 26 )
+hidden = true
+
+[node name="spikes18" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 307, 26 )
+hidden = true
+
+[node name="spikes19" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 323, 26 )
+hidden = true
+
+[node name="spikes20" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 339, 26 )
+hidden = true
+
+[node name="spikes21" parent="entities/screen4" instance=ExtResource( 4 )]
+material = SubResource( 53 )
+position = Vector2( 25, -85 )
+hidden = true
+
+[node name="platform" parent="entities/screen4" instance=ExtResource( 12 )]
+material = SubResource( 54 )
+position = Vector2( 103, -16 )
+DISTANCE = 150.0
+SPEED = 15.0
+
+[node name="fall_object" parent="entities/screen4" instance=ExtResource( 13 )]
+material = SubResource( 55 )
+position = Vector2( 294, -166 )
+START_LINEAR_VELOCITY = 300.0
+
+[node name="sprite" parent="entities/screen4/fall_object" index="0"]
+texture = ExtResource( 9 )
+
+[node name="collision" parent="entities/screen4/fall_object" index="1"]
+shape = SubResource( 56 )
+
+[node name="shape" parent="entities/screen4/fall_object/trigger_zone" index="0"]
+position = Vector2( 0, 68 )
+shape = SubResource( 57 )
+
+[node name="shape" parent="entities/screen4/fall_object/death_zone" index="0"]
+shape = SubResource( 58 )
+
+[node name="fall_object2" parent="entities/screen4" instance=ExtResource( 13 )]
+material = SubResource( 55 )
+position = Vector2( -5, -68 )
+START_LINEAR_VELOCITY = 300.0
+
+[node name="sprite" parent="entities/screen4/fall_object2" index="0"]
+texture = ExtResource( 9 )
+
+[node name="collision" parent="entities/screen4/fall_object2" index="1"]
+shape = SubResource( 56 )
+
+[node name="shape" parent="entities/screen4/fall_object2/trigger_zone" index="0"]
+position = Vector2( 0, 30 )
+shape = SubResource( 59 )
+
+[node name="shape" parent="entities/screen4/fall_object2/death_zone" index="0"]
+shape = SubResource( 60 )
+
+[node name="platform2" parent="entities/screen4" instance=ExtResource( 12 )]
+material = SubResource( 61 )
+position = Vector2( 126, -91.7906 )
+DISTANCE = 120.0
+SPEED = 15.0
+
+[node name="bullet" parent="entities/screen4" instance=ExtResource( 14 )]
+material = SubResource( 62 )
+position = Vector2( -28, -116 )
+VELOCITY = Vector2( 150, 0 )
+
+[node name="shape" parent="entities/screen4/bullet/trigger_zone" index="0"]
+position = Vector2( 210, 0 )
+shape = SubResource( 63 )
+
+[node name="end_screen4" parent="entities" instance=ExtResource( 10 )]
+position = Vector2( 814, -418 )
+
+[node name="shape" parent="entities/end_screen4" index="0"]
+position = Vector2( -9, 2 )
+
+[node name="collision" parent="entities/end_screen4/block" index="0"]
+disabled = false
+
+[node name="death_zone" parent="." instance=ExtResource( 7 )]
+position = Vector2( 415, 154 )
+
+[node name="shape" parent="death_zone" index="0"]
+position = Vector2( -5, -21 )
+shape = SubResource( 64 )
+
+[node name="tile_map" type="TileMap" parent="."]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( -2031566, 0, 65537, -2031565, 0, 65537, -2031564, 0, 65537, -2031563, 0, 65537, -2031562, 0, 65537, -2031561, 0, 65537, -2031560, 0, 65537, -2031559, 0, 65537, -2031558, 0, 65537, -2031557, 0, 65537, -2031556, 0, 65537, -2031555, 0, 65537, -2031554, 0, 65537, -2031553, 0, 65537, -2031552, 0, 65537, -2031551, 0, 65537, -2031550, 0, 65537, -2031549, 0, 65537, -2031548, 0, 65537, -2031547, 0, 65537, -2031546, 0, 65537, -2031545, 0, 65537, -2031544, 0, 65537, -2031543, 0, 65537, -2031542, 0, 65537, -2031541, 0, 65537, -1966030, 0, 65538, -1966006, 0, 65537, -1966005, 0, 65537, -1900494, 0, 65538, -1900470, 0, 65536, -1900469, 0, 65537, -1834958, 0, 65538, -1834934, 0, 65536, -1834933, 0, 65537, -1769398, 0, 65536, -1769397, 0, 65537, -1703862, 0, 65536, -1703861, 0, 65537, -1638350, 0, 65539, -1638349, 0, 4, -1638348, 0, 4, -1638347, 0, 4, -1638346, 0, 4, -1638345, 0, 5, -1638326, 0, 65536, -1638325, 0, 65537, -1572814, 0, 65538, -1572790, 0, 65536, -1572789, 0, 65537, -1507303, 0, 65537, -1507302, 0, 65537, -1507301, 0, 65537, -1507300, 0, 65537, -1507299, 0, 65537, -1507298, 0, 65537, -1507297, 0, 65537, -1507296, 0, 65537, -1507295, 0, 65537, -1507294, 0, 65537, -1507293, 0, 65537, -1507292, 0, 65537, -1507291, 0, 65537, -1507290, 0, 65537, -1507289, 0, 65537, -1507288, 0, 65537, -1507287, 0, 65537, -1507286, 0, 65537, -1507285, 0, 65537, -1507284, 0, 65537, -1507283, 0, 65537, -1507282, 0, 65537, -1507281, 0, 65537, -1507280, 0, 65537, -1507279, 0, 65537, -1507278, 0, 65538, -1507254, 0, 65536, -1507253, 0, 65537, -1441767, 0, 65537, -1441766, 0, 131076, -1441765, 0, 131076, -1441764, 0, 131076, -1441763, 0, 131076, -1441762, 0, 131076, -1441761, 0, 131077, -1441760, 0, 131073, -1441759, 0, 131073, -1441758, 0, 131073, -1441757, 0, 131073, -1441756, 0, 131073, -1441755, 0, 131073, -1441754, 0, 131073, -1441753, 0, 131073, -1441752, 0, 131075, -1441751, 0, 131076, -1441750, 0, 131076, -1441749, 0, 131076, -1441748, 0, 131076, -1441747, 0, 131076, -1441746, 0, 131076, -1441745, 0, 131076, -1441744, 0, 131076, -1441743, 0, 131076, -1441742, 0, 65538, -1441719, 0, 3, -1441718, 0, 65536, -1441717, 0, 65537, -1376231, 0, 65538, -1376182, 0, 65536, -1376181, 0, 65537, -1310695, 0, 65538, -1310646, 0, 65536, -1310645, 0, 65537, -1245159, 0, 65538, -1245154, 0, 65539, -1245110, 0, 65536, -1245109, 0, 65537, -1179623, 0, 65538, -1179618, 0, 65537, -1179609, 0, 0, -1179608, 0, 1, -1179607, 0, 1, -1179606, 0, 1, -1179605, 0, 1, -1179604, 0, 65540, -1179603, 0, 65539, -1179602, 0, 65540, -1179601, 0, 65539, -1179600, 0, 65539, -1179599, 0, 65539, -1179598, 0, 65540, -1179597, 0, 1, -1179596, 0, 65539, -1179595, 0, 65539, -1179594, 0, 65539, -1179593, 0, 1, -1179592, 0, 1, -1179591, 0, 65540, -1179590, 0, 65539, -1179589, 0, 1, -1179588, 0, 1, -1179587, 0, 1, -1179586, 0, 65540, -1179585, 0, 65539, -1179584, 0, 65540, -1179583, 0, 1, -1179582, 0, 65539, -1179581, 0, 65539, -1179580, 0, 65540, -1179579, 0, 65540, -1179578, 0, 1, -1179577, 0, 1, -1179576, 0, 65539, -1179575, 0, 65539, -1179574, 0, 65537, -1179573, 0, 65537, -1114087, 0, 65538, -1114082, 0, 65537, -1114074, 0, 0, -1114073, 0, 65537, -1114072, 0, 65537, -1114071, 0, 65537, -1114070, 0, 65537, -1114069, 0, 65537, -1114068, 0, 65537, -1114067, 0, 65537, -1114066, 0, 65537, -1114065, 0, 65537, -1114064, 0, 65537, -1114063, 0, 65537, -1114062, 0, 65537, -1114061, 0, 65537, -1114060, 0, 65537, -1114059, 0, 65537, -1114058, 0, 65537, -1114057, 0, 65537, -1114056, 0, 65537, -1114055, 0, 65537, -1114054, 0, 65537, -1114053, 0, 65537, -1114052, 0, 65537, -1114051, 0, 65537, -1114050, 0, 65537, -1114049, 0, 65537, -1114048, 0, 65537, -1114047, 0, 65537, -1114046, 0, 65537, -1114045, 0, 65537, -1114044, 0, 65537, -1114043, 0, 65537, -1114042, 0, 65537, -1114041, 0, 65537, -1114040, 0, 65537, -1114039, 0, 65537, -1114038, 0, 65537, -1114037, 0, 65537, -1048551, 0, 65538, -1048546, 0, 65537, -1048543, 0, 0, -1048542, 0, 65539, -1048541, 0, 65539, -1048540, 0, 1, -1048539, 0, 1, -1048538, 0, 65537, -1048537, 0, 131076, -1048536, 0, 131077, -1048535, 0, 131073, -1048534, 0, 131073, -1048533, 0, 131073, -1048532, 0, 131075, -1048531, 0, 131076, -1048530, 0, 131076, -1048529, 0, 131076, -1048528, 0, 131076, -1048527, 0, 65537, -1048526, 0, 65537, -983015, 0, 65538, -983007, 0, 131072, -983006, 0, 131075, -983005, 0, 131076, -983004, 0, 131076, -983003, 0, 131076, -983002, 0, 131076, -982991, 0, 65536, -982990, 0, 65537, -917479, 0, 65538, -917455, 0, 65536, -917454, 0, 65537, -851943, 0, 65538, -851919, 0, 65536, -851918, 0, 65537, -786407, 0, 65538, -786383, 0, 65536, -786382, 0, 65537, -720871, 0, 65537, -720870, 0, 1, -720869, 0, 1, -720868, 0, 1, -720867, 0, 1, -720866, 0, 1, -720865, 0, 1, -720864, 0, 1, -720863, 0, 1, -720862, 0, 1, -720861, 0, 1, -720860, 0, 1, -720859, 0, 1, -720858, 0, 1, -720857, 0, 1, -720856, 0, 1, -720855, 0, 1, -720854, 0, 1, -720853, 0, 1, -720852, 0, 2, -720847, 0, 65536, -720846, 0, 65537, -655335, 0, 65537, -655334, 0, 131077, -655333, 0, 131073, -655332, 0, 131073, -655331, 0, 131073, -655330, 0, 131073, -655329, 0, 131075, -655328, 0, 131076, -655327, 0, 131076, -655326, 0, 131076, -655325, 0, 131076, -655324, 0, 131076, -655323, 0, 131076, -655322, 0, 131076, -655321, 0, 131076, -655320, 0, 131077, -655319, 0, 131073, -655318, 0, 131073, -655317, 0, 131073, -655316, 0, 131075, -655315, 0, 4, -655314, 0, 5, -655311, 0, 65536, -655310, 0, 65537, -589799, 0, 65538, -589775, 0, 65536, -524263, 0, 65538, -524239, 0, 65536, -458727, 0, 65538, -458703, 0, 65536, -393191, 0, 65538, -393178, 0, 3, -393177, 0, 4, -393176, 0, 4, -393175, 0, 4, -393174, 0, 1, -393173, 0, 65540, -393172, 0, 1, -393171, 0, 2, -393167, 0, 65536, -327655, 0, 65538, -327638, 0, 131072, -327637, 0, 131073, -327636, 0, 131073, -327635, 0, 131074, -327631, 0, 65536, -262119, 0, 65538, -262095, 0, 65536, -196590, 0, 65537, -196589, 0, 131076, -196588, 0, 131076, -196587, 0, 131076, -196586, 0, 131076, -196585, 0, 131076, -196584, 0, 131076, -196583, 0, 131076, -196559, 0, 65536, -131054, 0, 65538, -131031, 0, 0, -131030, 0, 65539, -131029, 0, 65539, -131028, 0, 65539, -131027, 0, 2, -131023, 0, 65536, -65518, 0, 65538, -65496, 0, 0, -65495, 0, 65537, -65494, 0, 65537, -65493, 0, 65537, -65492, 0, 65537, -65491, 0, 65537, -65490, 0, 65539, -65489, 0, 65539, -65488, 0, 65539, -65487, 0, 65537, 0, 0, 65537, 1, 0, 131076, 2, 0, 131076, 3, 0, 131076, 4, 0, 131076, 5, 0, 131076, 6, 0, 131076, 7, 0, 131077, 8, 0, 131073, 9, 0, 131073, 10, 0, 131073, 11, 0, 131075, 12, 0, 131076, 13, 0, 131076, 14, 0, 131076, 15, 0, 131077, 16, 0, 131073, 17, 0, 131073, 18, 0, 131074, 39, 0, 0, 40, 0, 65537, 41, 0, 65537, 42, 0, 65537, 43, 0, 65537, 44, 0, 65537, 45, 0, 65537, 46, 0, 65537, 47, 0, 65537, 48, 0, 65537, 49, 0, 65537, 65536, 0, 65538, 65574, 0, 0, 65575, 0, 65537, 65576, 0, 65537, 65577, 0, 65537, 65578, 0, 65537, 65579, 0, 65537, 65580, 0, 65537, 65581, 0, 65537, 65582, 0, 65537, 65583, 0, 65537, 65584, 0, 65537, 65585, 0, 65537, 131072, 0, 65538, 131094, 0, 3, 131095, 0, 4, 131096, 0, 1, 131097, 0, 65539, 131098, 0, 65539, 131099, 0, 65539, 131100, 0, 65539, 131101, 0, 65539, 131102, 0, 65539, 131103, 0, 65539, 131104, 0, 65539, 131105, 0, 65539, 131106, 0, 65539, 131107, 0, 65539, 131108, 0, 65539, 131109, 0, 65539, 131110, 0, 65537, 131111, 0, 65537, 131112, 0, 65537, 131113, 0, 65537, 131114, 0, 65537, 131115, 0, 65537, 131116, 0, 65537, 131117, 0, 65537, 131118, 0, 65537, 131119, 0, 65537, 131120, 0, 65537, 131121, 0, 65537, 196608, 0, 65538, 196632, 0, 65536, 262144, 0, 65538, 262168, 0, 65536, 327680, 0, 65538, 327700, 0, 3, 327701, 0, 4, 327702, 0, 4, 327703, 0, 4, 327704, 0, 4, 393216, 0, 65538, 458752, 0, 65538, 524288, 0, 65538, 524306, 0, 3, 524307, 0, 4, 524308, 0, 4, 524309, 0, 4, 524310, 0, 4, 524311, 0, 4, 524312, 0, 4, 524313, 0, 5, 589824, 0, 65538, 655360, 0, 65538, 720896, 0, 65537, 720897, 0, 1, 720898, 0, 65540, 720899, 0, 65540, 720900, 0, 1, 720901, 0, 65540, 720902, 0, 65540, 720903, 0, 65539, 720904, 0, 65539, 720905, 0, 65540, 720906, 0, 65540, 720907, 0, 1, 720908, 0, 1, 720909, 0, 65539, 720910, 0, 65540, 720911, 0, 65540, 720912, 0, 1, 720913, 0, 65539, 720914, 0, 1, 720915, 0, 65539, 720916, 0, 1, 720917, 0, 65540, 720918, 0, 1, 720919, 0, 1, 720920, 0, 1, 786432, 0, 65537, 786433, 0, 65537, 786434, 0, 65537, 786435, 0, 65537, 786436, 0, 65537, 786437, 0, 65537, 786438, 0, 65537, 786439, 0, 65537, 786440, 0, 65537, 786441, 0, 65537, 786442, 0, 65537, 786443, 0, 65537, 786444, 0, 65537, 786445, 0, 65537, 786446, 0, 65537, 786447, 0, 65537, 786448, 0, 65537, 786449, 0, 65537, 786450, 0, 65537, 786451, 0, 65537, 786452, 0, 65537, 786453, 0, 65537, 786454, 0, 65537, 786455, 0, 65537, 786456, 0, 65537 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="cameras" type="Node2D" parent="."]
+
+[node name="screen1" type="Camera2D" parent="cameras"]
+position = Vector2( 200, 100 )
+current = true
+
+[node name="screen2" type="Camera2D" parent="cameras"]
+position = Vector2( 600, -55 )
+
+[node name="screen3" type="Camera2D" parent="cameras"]
+position = Vector2( 600, -254 )
+
+[node name="screen4" type="Camera2D" parent="cameras"]
+position = Vector2( 1001, -371 )
+
+[editable path="entities/screen1/crusher"]
+[editable path="entities/screen1/crusher/trigger_zone"]
+[editable path="entities/screen1/crusher/floor_part/death_zone"]
+[editable path="entities/screen1/spikes3"]
+[editable path="entities/screen1/spikes3/spike/death_zone"]
+[editable path="entities/screen1/spikes3/trigger_zone"]
+[editable path="entities/screen2/fall_object"]
+[editable path="entities/screen2/fall_object/trigger_zone"]
+[editable path="entities/screen2/fall_object/death_zone"]
+[editable path="entities/screen2/fall_object2"]
+[editable path="entities/screen2/fall_object2/trigger_zone"]
+[editable path="entities/screen2/fall_object2/death_zone"]
+[editable path="entities/screen2/crusher"]
+[editable path="entities/screen2/crusher/trigger_zone"]
+[editable path="entities/screen2/crusher/floor_part/death_zone"]
+[editable path="entities/screen2/death_zone"]
+[editable path="entities/end_screen2"]
+[editable path="entities/screen3/bullet"]
+[editable path="entities/screen3/bullet/trigger_zone"]
+[editable path="entities/screen3/bullet/death_zone"]
+[editable path="entities/screen3/bullet2"]
+[editable path="entities/screen3/bullet2/trigger_zone"]
+[editable path="entities/screen3/bullet2/death_zone"]
+[editable path="entities/screen3/spikes2"]
+[editable path="entities/screen3/spikes2/spike/death_zone"]
+[editable path="entities/screen3/spikes2/trigger_zone"]
+[editable path="entities/screen3/crusher"]
+[editable path="entities/screen3/crusher/trigger_zone"]
+[editable path="entities/screen3/crusher/floor_part/death_zone"]
+[editable path="entities/screen3/fall_object"]
+[editable path="entities/screen3/fall_object/trigger_zone"]
+[editable path="entities/screen3/fall_object/death_zone"]
+[editable path="entities/screen3/fall_object3"]
+[editable path="entities/screen3/fall_object3/trigger_zone"]
+[editable path="entities/screen3/fall_object3/death_zone"]
+[editable path="entities/screen3/fall_object2"]
+[editable path="entities/screen3/fall_object2/trigger_zone"]
+[editable path="entities/screen3/fall_object2/death_zone"]
+[editable path="entities/screen4/fall_object"]
+[editable path="entities/screen4/fall_object/trigger_zone"]
+[editable path="entities/screen4/fall_object/death_zone"]
+[editable path="entities/screen4/fall_object2"]
+[editable path="entities/screen4/fall_object2/trigger_zone"]
+[editable path="entities/screen4/fall_object2/death_zone"]
+[editable path="entities/screen4/bullet"]
+[editable path="entities/screen4/bullet/trigger_zone"]
+[editable path="entities/screen4/bullet/death_zone"]
+[editable path="entities/end_screen4"]
+[editable path="death_zone"]

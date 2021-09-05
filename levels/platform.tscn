@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://levels/factory_tilemap.tres" type="TileSet" id=1]
+[ext_resource path="res://levels/platform.gd" type="Script" id=2]
+[ext_resource path="res://player/trigger_zone.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/player_future_shader.tres" type="Material" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 23, 5 )
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 4.0
+height = 38.0
+
+[node name="platform" type="KinematicBody2D"]
+material = ExtResource( 4 )
+script = ExtResource( 2 )
+
+[node name="particles" type="CPUParticles2D" parent="."]
+position = Vector2( 24, 8 )
+amount = 5
+lifetime = 0.5
+randomness = 1.0
+local_coords = false
+emission_shape = 2
+emission_rect_extents = Vector2( 20, 1 )
+direction = Vector2( 0, -1 )
+spread = 180.0
+angular_velocity = 133.95
+angular_velocity_random = 1.0
+orbit_velocity_random = 1.0
+scale_amount = 3.0
+scale_amount_random = 1.0
+color = Color( 0.0784314, 1, 0.921569, 1 )
+hue_variation = 0.05
+hue_variation_random = 1.0
+
+[node name="tilemap" type="TileMap" parent="."]
+use_parent_material = true
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+format = 1
+tile_data = PoolIntArray( 0, 0, 3, 1, 0, 4, 2, 0, 5 )
+
+[node name="trigger_zone" parent="." instance=ExtResource( 3 )]
+
+[node name="shape" parent="trigger_zone" index="0"]
+position = Vector2( 24, -4 )
+shape = SubResource( 1 )
+
+[node name="collision" type="CollisionShape2D" parent="."]
+position = Vector2( 24, 5 )
+rotation = 1.5708
+shape = SubResource( 2 )
+disabled = true
+
+[node name="wait_after_future" type="Timer" parent="."]
+wait_time = 1.5
+
+[connection signal="timeout" from="wait_after_future" to="." method="_on_wait_after_future_timeout"]
+
+[editable path="trigger_zone"]

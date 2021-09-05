@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://player/trigger_zone.tscn" type="PackedScene" id=2]
+[ext_resource path="res://enemies/fall_object.gd" type="Script" id=3]
+[ext_resource path="res://enemies/death_zone.tscn" type="PackedScene" id=4]
+[ext_resource path="res://player/player_future_shader.tres" type="Material" id=5]
+
+[node name="fall_object" type="RigidBody2D"]
+material = ExtResource( 5 )
+collision_layer = 0
+collision_mask = 0
+script = ExtResource( 3 )
+START_LINEAR_VELOCITY = 200.0
+
+[node name="sprite" type="Sprite" parent="."]
+use_parent_material = true
+
+[node name="collision" type="CollisionShape2D" parent="."]
+
+[node name="lifetime" type="Timer" parent="."]
+wait_time = 4.0
+
+[node name="trigger_zone" parent="." instance=ExtResource( 2 )]
+
+[node name="shape" parent="trigger_zone" index="0"]
+position = Vector2( 0, 39 )
+
+[node name="death_zone" parent="." instance=ExtResource( 4 )]
+
+[connection signal="timeout" from="lifetime" to="." method="_on_lifetime_timeout"]
+[connection signal="area_entered" from="trigger_zone" to="." method="_on_trigger_zone_area_entered"]
+
+[editable path="trigger_zone"]
+[editable path="death_zone"]

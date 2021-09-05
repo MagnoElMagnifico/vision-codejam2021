@@ -1,0 +1,7 @@
+[gd_scene format=2]
+
+[node name="death_zone" type="Area2D"]
+collision_layer = 8
+collision_mask = 6
+
+[node name="shape" type="CollisionShape2D" parent="."]

@@ -1,0 +1,93 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://menu/main_menu.gd" type="Script" id=1]
+[ext_resource path="res://assets/level1-background.png" type="Texture" id=2]
+[ext_resource path="res://assets/city_paralax-black.png" type="Texture" id=3]
+[ext_resource path="res://assets/city_paralax-grey.png" type="Texture" id=4]
+[ext_resource path="res://assets/logo.png" type="Texture" id=5]
+[ext_resource path="res://menu/theme.tres" type="Theme" id=6]
+[ext_resource path="res://assets/audio/button.wav" type="AudioStream" id=7]
+
+[node name="main_menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="city_background_grey2" type="TextureRect" parent="."]
+margin_left = 124.873
+margin_top = 2.52269
+margin_right = 524.873
+margin_bottom = 202.523
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="city_background_grey1" type="TextureRect" parent="."]
+margin_left = -57.6014
+margin_top = 0.840897
+margin_right = 342.399
+margin_bottom = 200.841
+texture = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="city_background_black" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="logo" type="TextureRect" parent="."]
+margin_top = 40.0
+margin_right = 400.0
+margin_bottom = 103.0
+texture = ExtResource( 5 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="start" type="Button" parent="."]
+margin_left = 152.0
+margin_top = 112.0
+margin_right = 246.0
+margin_bottom = 144.0
+theme = ExtResource( 6 )
+text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="exit" type="Button" parent="."]
+margin_left = 163.614
+margin_top = 149.764
+margin_right = 233.614
+margin_bottom = 169.764
+theme = ExtResource( 6 )
+text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[connection signal="pressed" from="start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="exit" to="." method="_on_start_pressed"]

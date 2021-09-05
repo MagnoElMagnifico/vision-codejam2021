@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://menu/theme.tres" type="Theme" id=1]
+[ext_resource path="res://assets/audio/button.wav" type="AudioStream" id=2]
+[ext_resource path="res://menu/game_over.gd" type="Script" id=3]
+[ext_resource path="res://menu/ardestine.tres" type="DynamicFont" id=4]
+
+[node name="game_over" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="menu" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="background" type="ColorRect" parent="menu"]
+margin_right = 400.0
+margin_bottom = 200.0
+rect_min_size = Vector2( 400, 200 )
+color = Color( 0, 0, 0, 0.588235 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="buttons" type="VBoxContainer" parent="menu"]
+margin_left = 160.0
+margin_top = 67.0
+margin_right = 240.0
+margin_bottom = 132.0
+rect_min_size = Vector2( 80, 42 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="message" type="Label" parent="menu/buttons"]
+margin_right = 80.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 1, 0.588235, 0.588235, 1 )
+align = 1
+valign = 1
+uppercase = true
+
+[node name="retry" type="Button" parent="menu/buttons"]
+margin_top = 23.0
+margin_right = 80.0
+margin_bottom = 42.0
+text = "Retry"
+
+[node name="exit" type="Button" parent="menu/buttons"]
+margin_top = 46.0
+margin_right = 80.0
+margin_bottom = 65.0
+text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+
+[connection signal="pressed" from="menu/buttons/retry" to="." method="_on_retry_pressed"]
+[connection signal="pressed" from="menu/buttons/exit" to="." method="_on_exit_pressed"]
+[connection signal="finished" from="audio" to="." method="_on_audio_finished"]

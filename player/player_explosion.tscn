@@ -1,0 +1,175 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://assets/player_parts.png" type="Texture" id=1]
+[ext_resource path="res://player/player_explosion.gd" type="Script" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 1.0
+height = 10.0
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 4.0
+height = 4.0
+
+[sub_resource type="CapsuleShape2D" id=3]
+radius = 1.0
+height = 8.0
+
+[sub_resource type="CapsuleShape2D" id=4]
+radius = 3.0
+height = 6.0
+
+[sub_resource type="CapsuleShape2D" id=5]
+radius = 1.0
+height = 10.0
+
+[sub_resource type="CapsuleShape2D" id=6]
+radius = 3.0
+height = 2.0
+
+[node name="player_explosion" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="particles" type="CPUParticles2D" parent="."]
+show_behind_parent = true
+use_parent_material = true
+emitting = false
+amount = 50
+one_shot = true
+explosiveness = 1.0
+randomness = 1.0
+local_coords = false
+emission_shape = 1
+emission_sphere_radius = 20.0
+spread = 180.0
+initial_velocity = 53.19
+initial_velocity_random = 1.0
+angular_velocity = 15.32
+angular_velocity_random = 1.0
+linear_accel = 58.51
+linear_accel_random = 1.0
+angle_random = 1.0
+scale_amount = 2.08
+scale_amount_random = 1.0
+color = Color( 0.0784314, 0.0784314, 0.0784314, 1 )
+hue_variation = 0.75
+hue_variation_random = 1.0
+
+[node name="Base_physics" type="RigidBody2D" parent="."]
+use_parent_material = true
+
+[node name="Base" type="Polygon2D" parent="Base_physics"]
+use_parent_material = true
+position = Vector2( 10, -24 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+texture = ExtResource( 1 )
+skeleton = NodePath("../../Skeleton")
+polygon = PoolVector2Array( 3, 37, 15, 37, 15, 40, 3, 40 )
+uv = PoolVector2Array( 3, 37, 15, 37, 15, 40, 3, 40 )
+bones = [ NodePath("Base"), PoolRealArray( 1, 1, 1, 1 ), NodePath("Base/Legs"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Head"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Back_arm"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Top_arm"), PoolRealArray( 0, 0, 0, 0 ) ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Base_physics"]
+position = Vector2( 1, 14 )
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Legs_physics" type="RigidBody2D" parent="."]
+use_parent_material = true
+
+[node name="Legs" type="Polygon2D" parent="Legs_physics"]
+use_parent_material = true
+position = Vector2( 10, -24 )
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+texture = ExtResource( 1 )
+skeleton = NodePath("../../Skeleton")
+polygon = PoolVector2Array( 3, 27, 15, 27, 15, 36, 3, 36 )
+uv = PoolVector2Array( 3, 27, 15, 27, 15, 36, 3, 36 )
+bones = [ NodePath("Base"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs"), PoolRealArray( 1, 1, 1, 1 ), NodePath("Base/Legs/Spine"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Head"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Back_arm"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Top_arm"), PoolRealArray( 0, 0, 0, 0 ) ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Legs_physics"]
+position = Vector2( 1, 8 )
+rotation = 1.5708
+shape = SubResource( 2 )
+
+[node name="Back_arm_physics" type="RigidBody2D" parent="."]
+use_parent_material = true
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+
+[node name="Back_arm" type="Polygon2D" parent="Back_arm_physics"]
+use_parent_material = true
+position = Vector2( -12, -20 )
+texture = ExtResource( 1 )
+skeleton = NodePath("../../Skeleton")
+polygon = PoolVector2Array( 14, 14, 17, 14, 17, 26, 14, 26 )
+uv = PoolVector2Array( 14, 14, 17, 14, 17, 26, 14, 26 )
+bones = [ NodePath("Base"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Head"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Back_arm"), PoolRealArray( 1, 1, 1, 1 ), NodePath("Base/Legs/Spine/Top_arm"), PoolRealArray( 0, 0, 0, 0 ) ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Back_arm_physics"]
+position = Vector2( 4, 0 )
+shape = SubResource( 3 )
+
+[node name="Body_physics" type="RigidBody2D" parent="."]
+use_parent_material = true
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+
+[node name="Body" type="Polygon2D" parent="Body_physics"]
+use_parent_material = true
+position = Vector2( -10, -21 )
+texture = ExtResource( 1 )
+skeleton = NodePath("../../Skeleton")
+polygon = PoolVector2Array( 5, 11, 13, 11, 13, 26, 5, 26 )
+uv = PoolVector2Array( 5, 11, 13, 11, 13, 26, 5, 26 )
+bones = [ NodePath("Base"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine"), PoolRealArray( 1, 1, 1, 1 ), NodePath("Base/Legs/Spine/Head"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Back_arm"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Top_arm"), PoolRealArray( 0, 0, 0, 0 ) ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body_physics"]
+position = Vector2( -1, -2 )
+shape = SubResource( 4 )
+
+[node name="Top_arm_physics" type="RigidBody2D" parent="."]
+use_parent_material = true
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+
+[node name="Top_arm" type="Polygon2D" parent="Top_arm_physics"]
+use_parent_material = true
+position = Vector2( -8, -21 )
+texture = ExtResource( 1 )
+skeleton = NodePath("../../Skeleton")
+polygon = PoolVector2Array( 0, 14, 4, 14, 4, 27, 0, 27 )
+uv = PoolVector2Array( 0, 14, 4, 14, 4, 27, 0, 27 )
+bones = [ NodePath("Base"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Head"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Back_arm"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Top_arm"), PoolRealArray( 1, 1, 1, 1 ) ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top_arm_physics"]
+position = Vector2( -6, 0 )
+shape = SubResource( 5 )
+
+[node name="Head_physics" type="RigidBody2D" parent="."]
+use_parent_material = true
+rotation = 3.14159
+scale = Vector2( 1, -1 )
+
+[node name="Head" type="Polygon2D" parent="Head_physics"]
+use_parent_material = true
+position = Vector2( -10, -18 )
+texture = ExtResource( 1 )
+skeleton = NodePath("../../Skeleton")
+polygon = PoolVector2Array( 6, 0, 13, 0, 13, 10, 6, 10 )
+uv = PoolVector2Array( 6, 0, 13, 0, 13, 10, 6, 10 )
+bones = [ NodePath("Base"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Head"), PoolRealArray( 1, 1, 1, 1 ), NodePath("Base/Legs/Spine/Back_arm"), PoolRealArray( 0, 0, 0, 0 ), NodePath("Base/Legs/Spine/Top_arm"), PoolRealArray( 0, 0, 0, 0 ) ]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Head_physics"]
+position = Vector2( 0, -13 )
+shape = SubResource( 6 )
+
+[node name="lifetime" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="audio" type="AudioStreamPlayer" parent="."]
+
+[connection signal="timeout" from="lifetime" to="." method="_on_lifetime_timeout"]

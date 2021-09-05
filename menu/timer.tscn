@@ -1,0 +1,85 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://menu/theme.tres" type="Theme" id=1]
+[ext_resource path="res://menu/timer.gd" type="Script" id=2]
+[ext_resource path="res://menu/ardestine.tres" type="DynamicFont" id=3]
+[ext_resource path="res://assets/button_pressed.png" type="Texture" id=4]
+[ext_resource path="res://assets/progressbar_back.png" type="Texture" id=5]
+[ext_resource path="res://assets/progressbar.png" type="Texture" id=6]
+[ext_resource path="res://assets/audio/clock.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/audio/alarm.wav" type="AudioStream" id=8]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 50, 20 )
+
+[node name="timer" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 1 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="timer" type="Timer" parent="."]
+wait_time = 90.0
+autostart = true
+
+[node name="container" type="MarginContainer" parent="."]
+visible = false
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 85.0
+margin_bottom = 25.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="time_left" type="Button" parent="container"]
+margin_right = 65.0
+margin_bottom = 19.0
+custom_fonts/font = ExtResource( 3 )
+disabled = true
+button_mask = 0
+text = "0:00.00"
+
+[node name="no_time_left" type="Button" parent="container"]
+margin_right = 65.0
+margin_bottom = 19.0
+custom_styles/disabled = SubResource( 1 )
+custom_fonts/font = ExtResource( 3 )
+disabled = true
+button_mask = 0
+text = "0:00.00"
+
+[node name="alarm_effect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 400, 200 )
+color = Color( 1, 0, 0, 0.588235 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="progressbar" type="TextureProgress" parent="."]
+margin_left = 96.0
+margin_top = 192.0
+margin_right = 296.0
+margin_bottom = 194.0
+value = 10.0
+texture_under = ExtResource( 5 )
+texture_progress = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="clock_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+autoplay = true
+
+[node name="alarm_audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -7.0
+
+[connection signal="timeout" from="timer" to="." method="_on_timer_timeout"]

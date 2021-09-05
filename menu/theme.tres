@@ -1,0 +1,82 @@
+[gd_resource type="Theme" load_steps=18 format=2]
+
+[ext_resource path="res://menu/ardestine.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/button.png" type="Texture" id=2]
+[ext_resource path="res://assets/button_touched.png" type="Texture" id=3]
+[ext_resource path="res://assets/button_pressed.png" type="Texture" id=4]
+[ext_resource path="res://assets/player_parts.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 50, 20 )
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 50, 20 )
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 50, 20 )
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id=4]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 50, 20 )
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id=5]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 50, 20 )
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 5 )
+region = Rect2( 6, 0, 7, 10 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 5 )
+region = Rect2( 6, 0, 7, 10 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 5 )
+region = Rect2( 6, 0, 7, 10 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 5 )
+region = Rect2( 6, 0, 7, 10 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.0784314, 1, 0.921569, 1 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+
+[sub_resource type="StyleBoxFlat" id=12]
+bg_color = Color( 1, 1, 1, 1 )
+
+[resource]
+default_font = ExtResource( 1 )
+Button/colors/font_color = Color( 0.0784314, 0.0784314, 0.0784314, 1 )
+Button/colors/font_color_disabled = Color( 0.0784314, 0.0784314, 0.0784314, 1 )
+Button/colors/font_color_hover = Color( 0.0352, 0.44, 0.406267, 1 )
+Button/colors/font_color_pressed = Color( 1, 0.313726, 0.352941, 1 )
+Button/constants/hseparation = 2
+Button/fonts/font = null
+Button/styles/disabled = SubResource( 1 )
+Button/styles/focus = SubResource( 2 )
+Button/styles/hover = SubResource( 3 )
+Button/styles/normal = SubResource( 4 )
+Button/styles/pressed = SubResource( 5 )
+HSlider/icons/grabber = SubResource( 6 )
+HSlider/icons/grabber_disabled = SubResource( 7 )
+HSlider/icons/grabber_highlight = SubResource( 8 )
+HSlider/icons/tick = SubResource( 9 )
+HSlider/styles/grabber_area = SubResource( 10 )
+HSlider/styles/grabber_area_highlight = SubResource( 11 )
+HSlider/styles/slider = SubResource( 12 )
